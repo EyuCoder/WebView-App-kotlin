@@ -1,13 +1,13 @@
 package com.codexo.webviewapp
 
 import android.annotation.SuppressLint
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 
@@ -22,7 +22,8 @@ class MainActivity : AppCompatActivity() {
         webView = findViewById(R.id.wv_main)
         progressBar = findViewById(R.id.pb_main)
         progressBar.max = 100
-        webView.webViewClient = WebViewClient()
+
+        webView.webViewClient = MyWVClient()
         webView.loadUrl("https://zenachmart.com")
 
         if (savedInstanceState != null) {
@@ -30,10 +31,8 @@ class MainActivity : AppCompatActivity() {
         } else {
             webView.settings.apply {
                 javaScriptEnabled = true
-                cacheMode
             }
             webView.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
-
             webView.webChromeClient = object : WebChromeClient() {
                 override fun onProgressChanged(view: WebView, newProgress: Int) {
                     super.onProgressChanged(view, newProgress)
@@ -48,6 +47,8 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+
+            //webView.webViewClient = MyWebViewClient()
         }
     }
 
@@ -57,26 +58,15 @@ class MainActivity : AppCompatActivity() {
         } else super.onBackPressed()
     }
 
-    inner class MyWebViewClient : WebViewClient() {
-
+    inner class MyWVClient : WebViewClient() {
         override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-            val targetUrl = "https//www.somelinksaddress.com/me/you"
+            val targetUrl = "https://zenachmart.com/am/product-category/men/jackets-and-coats/"
             if (targetUrl == url) {
-                // Start your activity here
+                Toast.makeText(baseContext, url, Toast.LENGTH_LONG).show()
             } else {
                 view.loadUrl(url)
             }
             return true
-        }
-
-        override fun onPageStarted(view: WebView, url: String, favicon: Bitmap) {
-            progressBar.visibility = View.VISIBLE
-            super.onPageStarted(view, url, favicon)
-        }
-
-        override fun onPageFinished(view: WebView, url: String) {
-            progressBar.visibility = View.GONE
-            super.onPageFinished(view, url)
         }
     }
 }
