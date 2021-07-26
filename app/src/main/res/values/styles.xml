@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--dialog background color is transparent-->
+    <style name="dialogTransparent" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item> <!--Border-->
+        <item name="android:windowIsFloating">true</item> <!--Does it appear above the activity?-->
+        <item name="android:windowBackground">@android:color/transparent</item> <!--dialog background color background transparent-->
+        <item name="android:windowNoTitle">true</item> <!--whether there is no title bar-->
+        <item name="android:backgroundDimEnabled">true</item> <!--Whether the background color is opaque-->
+    </style>
+</resources>
