@@ -1,6 +1,8 @@
 package com.codexo.webviewapp
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebChromeClient
@@ -73,11 +75,14 @@ class MainActivity : AppCompatActivity() {
 
     inner class MyWVClient : WebViewClient() {
         override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-            val targetUrl = "https://zenachmart.com/am/product-category/men/jackets-and-coats/"
-            if (targetUrl == url) {
-                Toast.makeText(baseContext, url, Toast.LENGTH_LONG).show()
+            val targetUrl = "zenachmart.com"
+            if (Uri.parse(url).host == targetUrl) {
+                webView.loadUrl(url)
+                Toast.makeText(baseContext, Uri.parse(url).host, Toast.LENGTH_LONG).show()
             } else {
-                view.loadUrl(url)
+                val i = Intent(Intent.ACTION_VIEW)
+                i.data = Uri.parse(url)
+                startActivity(i)
             }
             return true
         }
